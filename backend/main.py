@@ -1,5 +1,6 @@
 # backend/main.py
 from fastapi import FastAPI, HTTPException
+import backend
 from backend.schemas import UserCreate, TradeRequest, UserPortfolio
 from backend.portfolio import PortfolioManager
 from backend.data_loader import get_available_symbols, get_price
