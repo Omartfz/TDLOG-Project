@@ -1,0 +1,4 @@
+fastapi
+backend
+pydantic
+yfinance
