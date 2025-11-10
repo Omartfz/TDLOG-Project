@@ -1,8 +1,8 @@
 # backend/main.py
 from fastapi import FastAPI, HTTPException
-from backend.schemas import UserCreate, TradeRequest, UserPortfolio
-from backend.portfolio import PortfolioManager
-from backend.data_loader import get_available_symbols, get_price
+from schema import UserCreate, TradeRequest, UserPortfolio
+from portfolio import PortfolioManager
+from data_loader import get_available_symbols, get_price
 
 app = FastAPI(title="Quant Trading Game Backend")
 

@@ -1,6 +1,6 @@
 # backend/portfolio.py
-from backend.schemas import Position, Transaction, UserPortfolio, TradeRequest
-from backend.data_loader import get_price
+from schema import Position, Transaction, UserPortfolio, TradeRequest
+from data_loader import get_price
 
 class PortfolioManager:
     def __init__(self):

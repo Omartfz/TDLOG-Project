@@ -14,7 +14,7 @@ class Transaction(BaseModel):
     price: float
 
 class UserCreate(BaseModel):
-    username: str = Field(..., example="omar")
+    username: str = Field("omar")
 
 class UserPortfolio(BaseModel):
     username: str
