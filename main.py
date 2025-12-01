@@ -12,7 +12,7 @@ from fastapi.staticfiles import StaticFiles
 # REST routes for your normal HTTP API
 from api.routes import router as api_router
 
-# WebSocket endpoint (the async function you wrote in websockets/endpoints.py)
+# WebSocket endpoint (the async function websockets/endpoints.py)
 from websockets.endpoints import ws_endpoint
 
 # Create the main FastAPI application
@@ -26,7 +26,7 @@ UI_DIR = BASE_DIR / "ui"
 # CORS SETTINGS
 # ---------------------------------------------------------
 # CORS allows browsers from any domain to access this backend.
-# This is required so your frontend (index.html) can talk to the server.
+# This is required so the frontend (index.html) can talk to the server.
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],     # Allow requests from ANY website
@@ -42,7 +42,7 @@ async def serve_ui():
     # Locate index.html inside the "ui" folder (next to this file)
     file_path = UI_DIR / "index.html"
 
-    # Return the file with "no cache" headers so the browser always reloads it fresh
+    # Return the file with "no cache" headers so  browser always reloads it fresh
     return FileResponse(
         file_path,
         headers={
@@ -67,7 +67,6 @@ if js_dir.exists():
 # ---------------------------------------------------------
 # STATIC FILES (optional images)
 # ---------------------------------------------------------
-# If you have images or other static files, this exposes them at /images/...
 images_dir = BASE_DIR / "images"
 if images_dir.exists():
     app.mount("/images", StaticFiles(directory=images_dir), name="images")
@@ -93,11 +92,7 @@ app.websocket("/ws")(ws_endpoint)
 async def health():
     return {"status": "ok"}
 
-# ---------------------------------------------------------
-# DEV SERVER (only runs if you execute `python main.py`)
-# ---------------------------------------------------------
 if __name__ == "__main__":
     import uvicorn
-    # If your file lives inside an app/ directory, update to "app.main:app"
-    # `wsproto` enables full WebSocket support for uvicorn
+
     uvicorn.run("main:app", host="0.0.0.0", port=5000, reload=True, ws="wsproto")
