@@ -49,5 +49,5 @@ Price movements are randomly generated with volatility-based adjustments to mimi
 ## Author
 
 **Edward Bauduin, Omar Toufelaz, Anwar (met ton nom de famille), Mohammed Salim**  
-École des Ponts ParisTech – IMI Department  
+École Nationale des Ponts et Chaussées – IMI Department  
 *Project created as part of a software architecture course (Sep.–Jan. 2025).*
