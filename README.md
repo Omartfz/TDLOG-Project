@@ -1,48 +1,53 @@
-# TDLOG-Project
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:001F3F,100:004080&height=220&section=header&text=Multiplayer%20Trading%20Game&fontColor=ffffff&fontSize=45&desc=FastAPI%20×%20WebSockets%20|%20Real-Time%20Market%20Simulation%20and%20Trading%20Experience&descAlignY=65" alt="banner"/>
+</p>
 
-# 💹 Quant Trading Game
+<p align="center">
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=22&pause=1500&color=93C5FD&center=true&vCenter=true&width=700&lines=Trade+Virtual+Assets+in+Real+Time;Simulate+Market+Volatility;Experience+How+Markets+Actually+Work" alt="typing animation"/>
+</p>
 
-> **A web-based trading simulator for learning and experimenting with stock and option trading strategies.**  
-> Built with **FastAPI** (backend) and **Streamlit / React** (frontend).
+## Overview
 
----
-
-## 🧭 Overview
-
-The **Quant Trading Game** is an interactive web app that lets users trade virtual assets in a simplified market environment.
-
-The goal is to simulate basic market mechanics (buy/sell stocks, portfolio tracking, and eventually options) in an educational and gamified way — similar in spirit to [trading-game.uk](https://trading-game.uk), but with quantitative depth.
+Players join live sessions (“lobbies”) where they can buy and sell virtual assets such as oil, gold, and electronics while observing market fluctuations in real time.  
+The system simulates volatility, price movement, and competition between players, offering a simplified yet realistic introduction to trading mechanics.
 
 ---
 
-## 🚀 Features (MVP)
+## Key Features
 
-### ✅ **Phase 1 – Stock Trading**
-- Create an account with a starting capital (e.g. €100,000 virtual cash).  
-- Buy and sell major stocks (AAPL, AMZN, LVMH, etc.) using daily historical prices.  
-- Portfolio tracking: cash balance, current holdings, total value.  
-- Transaction history with timestamps.  
-- Graphical visualization of prices and portfolio evolution.
-
-### 🧩 **Phase 2 – Advanced Trading**
-- Short selling with margin constraints.  
-- Option trading (European Calls) priced via the **Black-Scholes-Merton (BSM)** model.  
-- Calculation of option payoffs at expiry for long/short positions.
+- Real-time multiplayer trading  
+- Dynamic price simulation  
+- Lobby creation and joining system  
+- Live synchronization of prices, balances, and trades  
+- Intuitive web-based user interface  
 
 ---
 
-## 🧱 Tech Stack
+## Screenshots
 
-| Layer | Technology |
-|-------|-------------|
-| **Backend** | 🐍 [FastAPI](https://fastapi.tiangolo.com/) for API endpoints |
-| **Frontend** | 💻 [Streamlit](https://streamlit.io/) (or React + Plotly for advanced UI) |
-| **Database** | 🗄️ SQLite (via SQLModel or SQLAlchemy) |
-| **Data Source** | 📈 [yfinance](https://pypi.org/project/yfinance/) for stock prices |
-| **Analytics** | 🧮 NumPy, Pandas, SciPy (for Black-Scholes & P&L) |
-| **Visualization** | 📊 Plotly / Matplotlib |
+<p align="center">
+  <img src="./images/Screenshot%202025-11-05%20181036.png" width="800"><br>
+  <img src="./images/Screenshot%202025-11-05%20181524.png" width="800"><br>
+  <img src="./images/Screenshot%202025-11-05%20181540.png" width="800"><br>
+  <img src="./images/Screenshot%202025-11-05%20181554.png" width="800"><br>
+  <img src="./images/Screenshot%202025-11-05%20181608.png" width="800">
+</p>
 
 ---
 
-## 📂 Project Structure
+## Concept
 
+Each player:
+- Starts with a fixed balance  
+- Trades assets at fluctuating prices  
+- Competes to maximize portfolio value before the session ends  
+
+Price movements are randomly generated with volatility-based adjustments to mimic real market microstructure.
+
+---
+
+## Author
+
+**Edward Bauduin**  
+École des Ponts ParisTech – IMI Department  
+*Project created as part of a software architecture course (Sep.–Oct. 2025).*

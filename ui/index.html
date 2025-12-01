@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Multiplayer Trading Game</title>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Our CSS moved to its own file -->
+  <!-- ⬇⬇⬇ juste ici : chemin absolu /css/... -->
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+  <h1>Multiplayer Trading Game</h1>
+
+  <div class="card">
+    <div class="controls">
+      <label>Name <input id="name" placeholder="Your name" /></label>
+      <button id="btnConnect">Connect</button>
+      <span>Status: <span id="wsStatus" class="badge red">disconnected</span></span>
+      <span id="userIdBox" class="muted"></span>
+    </div>
+    <div class="controls" style="margin-top:8px;">
+      <button id="btnCreate">Create Lobby</button>
+      <label>Join code <input id="joinCode" placeholder="ABC123" style="width:100px" /></label>
+      <button id="btnJoin">Join Lobby</button>
+    </div>
+    <div style="margin-top:6px;" class="muted">Tip: share your invite code with friends so they can join.</div>
+  </div>
+
+  <div id="lobbyCard" class="card hidden">
+    <h3>Lobby: <span id="lobbyIdTxt">-</span> <span id="lobbyStatus" class="badge">LOBBY</span></h3>
+    <div class="controls">
+      <div>Host: <b id="hostIdTxt"></b></div>
+      <div>Rules:
+        <span class="badge">Start Cap: <span id="ruleCap">-</span></span>
+        <span class="badge">Tick: <span id="ruleTick">-</span>s</span>
+        <span class="badge">Duration: <span id="ruleDur">-</span>s</span>
+      </div>
+      <div id="inviteBox" class="muted"></div>
+    </div>
+    <div class="controls" style="margin-top:8px;">
+      <label><input type="checkbox" id="readyChk"/> Ready</label>
+      <button id="btnStart" disabled>Start Game (host)</button>
+      <span class="muted">All players must be ready.</span>
+    </div>
+    <table>
+      <thead><tr><th>Name</th><th>UserId</th><th>Ready</th></tr></thead>
+      <tbody id="playersTbody"></tbody>
+    </table>
+  </div>
+
+  <div id="gameArea" class="hidden">
+    <div class="row">
+      <div class="card wide">
+        <h3>Market</h3>
+        <div class="card" style="margin:8px 0 12px 0;">
+          <div class="controls">
+            <label for="assetSel"><b>Chart asset:</b></label>
+            <select id="assetSel">
+              <option>OIL</option>
+              <option>GOLD</option>
+              <option>ELECTRONICS</option>
+              <option>RICE</option>
+              <option>PLUMBER</option>
+            </select>
+            <div class="badge">Time left: <span id="timeLeft">-</span>s</div>
+          </div>
+          <canvas id="priceChart" height="120"></canvas>
+        </div>
+
+        <table>
+          <thead><tr><th>Asset</th><th>Price</th><th>Qty</th><th>Side</th><th></th></tr></thead>
+          <tbody id="rows"></tbody>
+        </table>
+        <div id="log"></div>
+      </div>
+
+      <div class="card narrow">
+        <h3>Portfolio</h3>
+        <div class="kpis">
+          <div>Cash: <b id="k_cash">-</b></div>
+          <div>Equity: <b id="k_equity">-</b></div>
+          <div>Unrealized PnL: <b id="k_upnl">-</b></div>
+          <div>Realized PnL: <b id="k_rpnl">-</b></div>
+        </div>
+        <table style="margin-top:10px;">
+          <thead><tr><th>Asset</th><th>Qty</th><th>Avg</th><th>Price</th><th>Value</th><th>uPnL</th></tr></thead>
+          <tbody id="pos_rows"></tbody>
+        </table>
+
+        <h3 style="margin-top:16px;">Leaderboard</h3>
+        <table>
+          <thead><tr><th>Name</th><th>Equity</th><th>Realized</th></tr></thead>
+          <tbody id="lb_rows"></tbody>
+        </table>
+
+        <h3 style="margin-top:16px;">Trade History</h3>
+        <table>
+          <thead><tr><th>Time</th><th>Asset</th><th>Side</th><th>Qty</th><th>Entry</th><th>Exit</th><th>Realized</th><th>Duration (s)</th></tr></thead>
+          <tbody id="trades_rows"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Petit test inline pour vérifier que le JS se lance -->
+  <script>
+    console.log("INLINE TEST: index.html loaded");
+  </script>
+
+  <!-- Main entry point: app.js, qui importe ws.js -->
+  <script type="module" src="/js/app.js"></script>
+
+</body>
+</html>
