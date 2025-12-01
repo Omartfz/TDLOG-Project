@@ -1,12 +1,12 @@
 # Bloomberg Terminal-Style Trading Interface
 
-## 🎯 Overview
+## Overview
 
 This is a complete Bloomberg Terminal-inspired redesign of your multiplayer trading game. The interface now features professional-grade financial terminal aesthetics with high information density, real-time data visualization, and intuitive controls.
 
 ---
 
-## 🎨 Visual Design Features
+## Visual Design Features
 
 ### Color Scheme
 - **Dark Theme**: Deep navy/black background (#0a0e1a) for reduced eye strain
@@ -35,13 +35,13 @@ This is a complete Bloomberg Terminal-inspired redesign of your multiplayer trad
 │     (Bloomberg-styled)       │                        │
 │                              │                        │
 └──────────────────────────────┴────────────────────────┘
-│  📰 MARKET NEWS TICKER (Scrolling)                   │
+│  MARKET NEWS TICKER (Scrolling)                      │
 └─────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 🎮 Main Screen Panels
+## Main Screen Panels
 
 ### 1. **Portfolio Panel** (Top Left)
 Displays your trading performance in real-time:
@@ -120,10 +120,10 @@ Professional-grade price chart:
 
 ---
 
-## 📊 Leaderboard Modal
+## Leaderboard Modal
 
 ### Access Methods:
-1. Click **[📊 RANKINGS]** button in top-right
+1. Click **[RANKINGS]** button in top-right
 2. Press **[L]** key on keyboard
 3. Click overlay or **[×]** to close
 4. Press **[ESC]** to close
@@ -131,9 +131,9 @@ Professional-grade price chart:
 ### Features:
 - **Glass morphism effect**: Dark overlay with blur
 - **Rankings**:
-  - 🥇 Gold medal for 1st place
-  - 🥈 Silver medal for 2nd place  
-  - 🥉 Bronze medal for 3rd place
+  - #1 for 1st place
+  - #2 for 2nd place  
+  - #3 for 3rd place
 - **Columns**:
   - Rank
   - Trader name
@@ -144,7 +144,7 @@ Professional-grade price chart:
 
 ---
 
-## 📰 News Ticker
+## News Ticker
 
 **Location**: Fixed at bottom of screen
 
@@ -167,7 +167,7 @@ Professional-grade price chart:
 
 ---
 
-## ⌨️ Keyboard Shortcuts
+## Keyboard Shortcuts
 
 | Key | Action | Description |
 |-----|--------|-------------|
@@ -180,7 +180,7 @@ Professional-grade price chart:
 
 ---
 
-## 🎯 Behavior Rules
+## Behavior Rules
 
 ### Price Change Animations
 - **Flash Duration**: 0.6 seconds
@@ -214,7 +214,7 @@ Automatically applied to:
 
 ---
 
-## 🚀 Performance Optimizations
+## Performance Optimizations
 
 1. **Chart Updates**: Animation disabled for smooth real-time updates
 2. **Log Limiting**: Only keeps last 50 messages to prevent memory bloat
@@ -224,7 +224,7 @@ Automatically applied to:
 
 ---
 
-## 📱 Responsive Design
+## Responsive Design
 
 ### Desktop (>1400px)
 - 3-column grid layout
@@ -244,7 +244,7 @@ Automatically applied to:
 
 ---
 
-## 🎨 Bloomberg-Like Elements Implemented
+## Bloomberg-Like Elements Implemented
 
 ### ✅ Visual Density
 - Compact table layouts
@@ -278,7 +278,7 @@ Automatically applied to:
 
 ---
 
-## 🛠️ Technical Implementation
+## Technical Implementation
 
 ### File Structure
 ```
@@ -311,7 +311,7 @@ ui/
 
 ---
 
-## 🎯 Usage Tips
+## Usage Tips
 
 ### For Best Experience:
 1. **Full Screen**: Press F11 for immersive terminal experience
@@ -330,7 +330,7 @@ ui/
 
 ---
 
-## 🎉 Advanced Features
+## Advanced Features
 
 ### Sparklines
 - 20-tick mini charts for each asset
@@ -352,7 +352,7 @@ ui/
 
 ---
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Price Flashes Not Working?
 - Ensure CSS animations are enabled in browser
@@ -361,7 +361,7 @@ ui/
 
 ### Leaderboard Won't Open?
 - Press [L] key (not in input field)
-- Click 📊 RANKINGS button in top-right
+- Click RANKINGS button in top-right
 - Check console for errors
 
 ### Sparklines Not Rendering?
@@ -376,7 +376,7 @@ ui/
 
 ---
 
-## 📈 Future Enhancements (Suggestions)
+## Future Enhancements (Suggestions)
 
 1. **Sound Effects**: Terminal beeps for orders, ticks
 2. **More Sparklines**: Add volume bars, indicators
@@ -391,7 +391,7 @@ ui/
 
 ---
 
-## 📝 Credits
+## Credits
 
 **Design Inspiration**: Bloomberg Terminal  
 **Color Palette**: Bloomberg Professional Service  
@@ -401,7 +401,7 @@ ui/
 
 ---
 
-## 🔗 Component Integration
+## Component Integration
 
 All components are modular and work together:
 
@@ -422,7 +422,7 @@ All components are modular and work together:
 
 ---
 
-## ✨ Summary
+## Summary
 
 You now have a fully functional Bloomberg Terminal-inspired trading interface with:
 
