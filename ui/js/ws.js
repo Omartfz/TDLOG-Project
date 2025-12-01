@@ -100,6 +100,9 @@ export function connectWS() {
         byId("lobbyIdTxt").textContent = msg.lobbyId;
         byId("lobbyStatus").textContent = msg.status;
         byId("hostIdTxt").textContent = msg.hostId;
+        
+        // Update compact lobby info
+        byId("inviteBox").textContent = msg.lobbyId;
 
         byId("ruleCap").textContent =
           msg.rules.startingCapital ?? msg.rules["startingCapital"];
@@ -115,11 +118,16 @@ export function connectWS() {
         break;
 
       case "GAME_STARTED":
+        // Hide all other screens and show only game area
         showGameArea(true);
-        byId("lobbyStatus").textContent = "RUNNING";
+        
+        const lobbyStatus = byId("lobbyStatus");
+        if (lobbyStatus) lobbyStatus.textContent = "RUNNING";
 
         initChart();
         initMarket(handleOrder);
+        
+        console.log("✓ Game started - trading interface active");
         break;
 
       case "GAME_ENDED":
@@ -143,12 +151,12 @@ export function connectWS() {
 
       case "ORDER_ACCEPTED":
         log(
-          `Order accepted @ ${msg.price}: ${msg.side} ${msg.asset} x${msg.qty}`
+          `<span class="log-entry success">✓ ORDER ACCEPTED: ${msg.side} ${msg.asset} x${msg.qty} @ ${msg.price}</span>`
         );
         break;
 
       case "ORDER_REJECT":
-        log(`Order rejected: ${msg.reason}`);
+        log(`<span class="log-entry error">✗ ORDER REJECTED: ${msg.reason}</span>`);
         break;
 
       default:

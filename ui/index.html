@@ -2,116 +2,185 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>Multiplayer Trading Game</title>
-
-  <!-- Chart.js CDN -->
+  <title>Bloomberg Terminal - Trading Simulation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <!-- Our CSS moved to its own file -->
-  <!-- ⬇⬇⬇ juste ici : chemin absolu /css/... -->
   <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-  <h1>Multiplayer Trading Game</h1>
-
-  <div class="card">
-    <div class="controls">
-      <label>Name <input id="name" placeholder="Your name" /></label>
-      <button id="btnConnect">Connect</button>
-      <span>Status: <span id="wsStatus" class="badge red">disconnected</span></span>
-      <span id="userIdBox" class="muted"></span>
-    </div>
-    <div class="controls" style="margin-top:8px;">
-      <button id="btnCreate">Create Lobby</button>
-      <label>Join code <input id="joinCode" placeholder="ABC123" style="width:100px" /></label>
-      <button id="btnJoin">Join Lobby</button>
-    </div>
-    <div style="margin-top:6px;" class="muted">Tip: share your invite code with friends so they can join.</div>
-  </div>
-
-  <div id="lobbyCard" class="card hidden">
-    <h3>Lobby: <span id="lobbyIdTxt">-</span> <span id="lobbyStatus" class="badge">LOBBY</span></h3>
-    <div class="controls">
-      <div>Host: <b id="hostIdTxt"></b></div>
-      <div>Rules:
-        <span class="badge">Start Cap: <span id="ruleCap">-</span></span>
-        <span class="badge">Tick: <span id="ruleTick">-</span>s</span>
-        <span class="badge">Duration: <span id="ruleDur">-</span>s</span>
+  <!-- Compact Connection Setup Screen -->
+  <div id="setupScreen">
+    <div class="compact-header">
+      <div class="terminal-title-compact">BLOOMBERG TERMINAL</div>
+      <div class="terminal-status-compact">
+        <span id="wsStatus" class="badge-compact red">OFFLINE</span>
+        <span id="userIdBox" class="info-compact"></span>
       </div>
-      <div id="inviteBox" class="muted"></div>
     </div>
-    <div class="controls" style="margin-top:8px;">
-      <label><input type="checkbox" id="readyChk"/> Ready</label>
-      <button id="btnStart" disabled>Start Game (host)</button>
-      <span class="muted">All players must be ready.</span>
+
+    <div class="setup-compact">
+      <div class="setup-row">
+        <input id="name" class="input-compact" placeholder="Trader Name" />
+        <button id="btnConnect" class="btn-compact btn-primary">CONNECT</button>
+      </div>
+      
+      <div class="setup-row">
+        <button id="btnCreate" class="btn-compact btn-success">CREATE LOBBY</button>
+        <input id="joinCode" class="input-compact" placeholder="CODE" style="width:80px;text-transform:uppercase;" />
+        <button id="btnJoin" class="btn-compact btn-primary">JOIN</button>
+      </div>
     </div>
-    <table>
-      <thead><tr><th>Name</th><th>UserId</th><th>Ready</th></tr></thead>
-      <tbody id="playersTbody"></tbody>
-    </table>
   </div>
 
+  <!-- Compact Lobby Screen -->
+  <div id="lobbyCard" class="hidden">
+    <div class="compact-header">
+      <div class="terminal-title-compact">LOBBY: <span id="lobbyIdTxt" class="highlight">-</span> | <span id="lobbyStatus" class="badge-compact">WAITING</span></div>
+      <div class="lobby-info-compact">
+        HOST: <span id="hostIdTxt">-</span> | CODE: <span id="inviteBox" class="highlight">-</span> | CAP: <span id="ruleCap">-</span> | TICK: <span id="ruleTick">-</span>s | DUR: <span id="ruleDur">-</span>s
+      </div>
+    </div>
+
+    <div class="lobby-compact">
+      <div class="lobby-controls-compact">
+        <label class="ready-compact">
+          <input type="checkbox" id="readyChk"/> READY
+        </label>
+        <button id="btnStart" class="btn-compact btn-success" disabled>START SESSION</button>
+      </div>
+
+      <table class="terminal-table compact-table">
+        <thead><tr><th>TRADER</th><th>ID</th><th>STATUS</th></tr></thead>
+        <tbody id="playersTbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Compact Main Trading Terminal (Fits in viewport) -->
   <div id="gameArea" class="hidden">
-    <div class="row">
-      <div class="card wide">
-        <h3>Market</h3>
-        <div class="card" style="margin:8px 0 12px 0;">
-          <div class="controls">
-            <label for="assetSel"><b>Chart asset:</b></label>
-            <select id="assetSel">
-              <option>OIL</option>
-              <option>GOLD</option>
-              <option>ELECTRONICS</option>
-              <option>RICE</option>
-              <option>PLUMBER</option>
-            </select>
-            <div class="badge">Time left: <span id="timeLeft">-</span>s</div>
-          </div>
-          <canvas id="priceChart" height="120"></canvas>
-        </div>
+    <!-- Ultra-compact Top Bar -->
+    <div class="topbar-compact">
+      <span class="logo-compact">BLOOMBERG</span>
+      <span class="kpi-compact">CASH: <b id="k_cash_top">-</b></span>
+      <span class="kpi-compact">EQUITY: <b id="k_equity_top">-</b></span>
+      <span class="kpi-compact">P&L: <b id="k_pnl_top" class="pnl-value">-</b></span>
+      <span class="timer-compact">TIME: <b id="timeLeft">-</b>s</span>
+      <button id="btnLeaderboard" class="btn-icon-compact" title="[L]">📊</button>
+    </div>
 
-        <table>
-          <thead><tr><th>Asset</th><th>Price</th><th>Qty</th><th>Side</th><th></th></tr></thead>
-          <tbody id="rows"></tbody>
-        </table>
-        <div id="log"></div>
-      </div>
-
-      <div class="card narrow">
-        <h3>Portfolio</h3>
-        <div class="kpis">
-          <div>Cash: <b id="k_cash">-</b></div>
-          <div>Equity: <b id="k_equity">-</b></div>
-          <div>Unrealized PnL: <b id="k_upnl">-</b></div>
-          <div>Realized PnL: <b id="k_rpnl">-</b></div>
-        </div>
-        <table style="margin-top:10px;">
-          <thead><tr><th>Asset</th><th>Qty</th><th>Avg</th><th>Price</th><th>Value</th><th>uPnL</th></tr></thead>
+    <!-- Compact 3-Column Grid -->
+    <div class="grid-compact">
+      <!-- Left Column: Portfolio & Positions -->
+      <div class="panel-compact">
+        <div class="panel-title-compact">💼 POSITIONS</div>
+        <table class="terminal-table ultra-dense">
+          <thead>
+            <tr>
+              <th>TICKER</th>
+              <th>QTY</th>
+              <th>AVG</th>
+              <th>LAST</th>
+              <th>P&L</th>
+              <th>%</th>
+            </tr>
+          </thead>
           <tbody id="pos_rows"></tbody>
         </table>
+      </div>
 
-        <h3 style="margin-top:16px;">Leaderboard</h3>
-        <table>
-          <thead><tr><th>Name</th><th>Equity</th><th>Realized</th></tr></thead>
-          <tbody id="lb_rows"></tbody>
-        </table>
-
-        <h3 style="margin-top:16px;">Trade History</h3>
-        <table>
-          <thead><tr><th>Time</th><th>Asset</th><th>Side</th><th>Qty</th><th>Entry</th><th>Exit</th><th>Realized</th><th>Duration (s)</th></tr></thead>
-          <tbody id="trades_rows"></tbody>
+      <!-- Middle Column: Chart & Market Data -->
+      <div class="panel-compact">
+        <div class="panel-title-compact">
+          📊 <select id="assetSel" class="chart-selector-compact">
+            <option>OIL</option>
+            <option>GOLD</option>
+            <option>ELECTRONICS</option>
+            <option>RICE</option>
+            <option>PLUMBER</option>
+          </select>
+        </div>
+        <div class="chart-compact">
+          <canvas id="priceChart" height="180"></canvas>
+        </div>
+        
+        <div class="panel-title-compact" style="margin-top:4px;">📈 MARKET</div>
+        <table class="terminal-table ultra-dense">
+          <thead>
+            <tr>
+              <th>TICKER</th>
+              <th>LAST</th>
+              <th>CHG</th>
+              <th>%</th>
+              <th>SPARK</th>
+            </tr>
+          </thead>
+          <tbody id="market_rows"></tbody>
         </table>
       </div>
+
+      <!-- Right Column: Orders & Trades -->
+      <div class="panel-compact">
+        <div class="panel-title-compact">⚡ ORDERS</div>
+        <table class="terminal-table ultra-dense">
+          <thead>
+            <tr>
+              <th>TICKER</th>
+              <th>PRICE</th>
+              <th>QTY</th>
+              <th>ACTION</th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+        
+        <div class="panel-title-compact" style="margin-top:4px;">📋 TRADES</div>
+        <table class="terminal-table ultra-dense">
+          <thead>
+            <tr>
+              <th>TIME</th>
+              <th>TKR</th>
+              <th>SIDE</th>
+              <th>QTY</th>
+              <th>P&L</th>
+            </tr>
+          </thead>
+          <tbody id="trades_rows"></tbody>
+        </table>
+        
+        <div class="log-compact" id="log"></div>
+      </div>
+    </div>
+
+    <!-- Compact News Ticker -->
+    <div class="ticker-compact">
+      <span class="ticker-label-compact">NEWS</span>
+      <div class="ticker-scroll"><div id="tickerText"></div></div>
     </div>
   </div>
 
-  <!-- Petit test inline pour vérifier que le JS se lance -->
-  <script>
-    console.log("INLINE TEST: index.html loaded");
-  </script>
+  <!-- Compact Leaderboard Modal -->
+  <div id="leaderboardModal" class="modal hidden">
+    <div class="modal-overlay"></div>
+    <div class="modal-compact">
+      <div class="modal-header-compact">
+        <span>🏆 LEADERBOARD</span>
+        <button id="btnCloseLeaderboard" class="btn-close-compact">×</button>
+      </div>
+      <table class="terminal-table">
+        <thead>
+          <tr>
+            <th>RANK</th>
+            <th>TRADER</th>
+            <th>EQUITY</th>
+            <th>P&L</th>
+            <th>PERF</th>
+          </tr>
+        </thead>
+        <tbody id="lb_rows"></tbody>
+      </table>
+    </div>
+  </div>
 
-  <!-- Main entry point: app.js, qui importe ws.js -->
   <script type="module" src="/js/app.js"></script>
-
 </body>
 </html>
