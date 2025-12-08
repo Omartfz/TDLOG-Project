@@ -26,11 +26,8 @@ The system simulates volatility, price movement, and competition between players
 ## Screenshots
 
 <p align="center">
-  <img src="./images/Screenshot%202025-11-05%20181036.png" width="800"><br>
-  <img src="./images/Screenshot%202025-11-05%20181524.png" width="800"><br>
-  <img src="./images/Screenshot%202025-11-05%20181540.png" width="800"><br>
-  <img src="./images/Screenshot%202025-11-05%20181554.png" width="800"><br>
-  <img src="./images/Screenshot%202025-11-05%20181608.png" width="800">
+  <img src="./images/capture1.png" width="800"><br>
+  
 </p>
 
 ---
