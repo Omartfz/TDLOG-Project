@@ -9,7 +9,6 @@ router = APIRouter()
 async def index():
     """
     Serve the main trading game HTML page.
-    Equivalent to your old INDEX_HTML-based route.
     """
     file_path = Path(__file__).parent.parent / "ui" / "index.html"
     return FileResponse(

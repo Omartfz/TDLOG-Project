@@ -8,9 +8,8 @@ from domain.models import LobbyState, PlayerState
 from domain.portfolio import record_trade
 
 
-def execute_market(
-    lobby: LobbyState, pl: PlayerState, asset: str, side: str, qty: int
-) -> Tuple[bool, Optional[str]]:
+def execute_market(lobby: LobbyState, pl: PlayerState, asset: str, side: str,
+                   qty: int) -> Tuple[bool, Optional[str]]:
     """
     Executes a market order (BUY or SELL) for a given player in the lobby.
 
@@ -131,7 +130,8 @@ def execute_market(
             if cash < cost:
                 return False, "insufficient_cash"
             if pos["qty"] > 0:
-                pos["avg"] = (pos["avg"] * pos["qty"] + price * qty) / (pos["qty"] + qty)
+                pos["avg"] = (pos["avg"] * pos["qty"] +
+                              price * qty) / (pos["qty"] + qty)
             else:
                 pos["avg"] = price
             pos["qty"] += qty
@@ -162,15 +162,20 @@ def execute_market(
 
         # open/extend short
         if qty > 0:
+            notional = price * qty
+
+            # SIMPLE SHORT RULE: require cash collateral BEFORE receiving short proceeds
+            if cash < notional:
+                return False, "insufficient_cash_to_short"
+
             new_qty = pos["qty"] - qty
             if pos["qty"] < 0:
-                pos["avg"] = (pos["avg"] * abs(pos["qty"]) + price * qty) / (
-                    abs(pos["qty"]) + qty
-                )
+                pos["avg"] = (pos["avg"] * abs(pos["qty"]) +
+                              price * qty) / (abs(pos["qty"]) + qty)
             else:
                 pos["avg"] = price
             pos["qty"] = new_qty
-            cash += price * qty
+            cash += notional
             if pos["entry_ts"] is None:
                 pos["entry_ts"] = time.time()
 
